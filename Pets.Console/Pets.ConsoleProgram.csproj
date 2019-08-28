@@ -36,6 +36,9 @@
     <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.6.0\lib\net461\CommandLine.dll</HintPath>
     </Reference>
+    <Reference Include="ConsoleTables, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConsoleTables.2.3.0\lib\net40\ConsoleTables.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +55,16 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pets.DAO\Pets.DAO.csproj">
+      <Project>{83d03165-a18c-4bed-bc88-08d2e988c8c8}</Project>
+      <Name>Pets.DAO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pets.Logic\Pets.Logic.csproj">
+      <Project>{33a01f8f-863a-4ea2-8371-04e9d880d426}</Project>
+      <Name>Pets.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using CommandLine;
+using Pets.Logic;
+using Pets.DAO;
+using ConsoleTables;
 
 namespace Pets.ConsoleProgram
 {
@@ -36,29 +39,50 @@ namespace Pets.ConsoleProgram
             Parser.Default.ParseArguments<Options>(args)
                    .WithParsed<Options>(o =>
                    {
+                       Console.WriteLine($"PROGRAM STARTED. Arguments: FileName:{o.FileName}");
+                       Manager manager = new Manager(o.FileName);
+                       RequestSearchPet request = new RequestSearchPet();
+                       request.SearchPetGender = o.GenderSearch;
+                       request.SearchPetName = o.NameSearch;
+                       request.SearchPetType = o.TypeSearch;
 
-                       Console.Write($"FileName:{o.FileName} ,Enabled!");
-                       if (o.NameSearch != "")
+                       if (request.SearchPetGender != null)
                        {
-                           Console.WriteLine($"Name Search argument present:{o.NameSearch}");
+                           switch (request.SearchPetGender.ToUpper())
+                           {
+                               case "MALE":
+                                   request.SearchPetGender = "M";
+                                   break;
+                               case "FEMALE":
+                                   request.SearchPetGender = "F";
+                                   break;
+                               default:
+                                   throw new Exception("Only allowed values are MALE or FEMALE");
+
+                           }
                        }
+                       if (request.SearchPetName != null)
+                       {
+                           request.SearchPetName = request.SearchPetName.Trim();
+                       }
+                       if (request.SearchPetType != null)
+                       {
+                           request.SearchPetType = request.SearchPetType.Trim().ToUpper();
+                       }
+
+                       var resultSearch = manager.SearchPet(request);
+
+                       //draw a nice table here :)
+                       Console.WriteLine("Search Results:");
+                       var table = new ConsoleTable(new string[] { "Animal Type", "Animal Name", "Gender", "Timestamp" }); //Animal Type, Animal Name, Gender, Timestamp
+                       foreach (var row in resultSearch.results)
+                       {
+                           table.AddRow(row.AnimalType, row.AnimalName, row.Gender, DateTime.ParseExact(row.LastUpdate, "yyyyMMddHHmmss", System.Globalization.CultureInfo.InvariantCulture));
+                       }
+                       table.Write();
+                       Console.WriteLine("End of Search,That's all");
                    });
 
-           /* if (args.Length == 0)
-            {
-                Console.WriteLine("Please insert a valid argument.");
-                Console.WriteLine("First argument must be the file name of csv file must be relative to the executable of this console program (e.g. test.csv)");
-                Console.WriteLine("Second argument is search type over the csv file (e.g type=cat) (e.g type=dog gender=female) ");
-
-            }
-            var filePath = args[0];
-            string filePathAbs =Path.GetFullPath(filePath);
-            if (!File.Exists(filePath))
-            {
-                Console.WriteLine(String.Format("{0} File not exists!", filePath));
-                return;
-            }
-             */
 
         }
     }
