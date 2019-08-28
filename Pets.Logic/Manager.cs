@@ -31,6 +31,9 @@ namespace Pets.Logic
         public ResponseSearchPet SearchPet(RequestSearchPet request)
         {
             ResponseSearchPet response = new ResponseSearchPet();
+            request.SearchPetGender = (request.SearchPetGender == null) ? "" : request.SearchPetGender;
+            request.SearchPetType = (request.SearchPetType == null) ? "" : request.SearchPetType;
+            request.SearchPetName = (request.SearchPetName == null) ? "" : request.SearchPetName;
             response.results= DAManager.Search(request.SearchPetName, request.SearchPetType, request.SearchPetGender);
             return response;
         }

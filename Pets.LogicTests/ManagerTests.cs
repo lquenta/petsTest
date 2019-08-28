@@ -28,9 +28,15 @@ namespace Pets.Logic.Tests
         public void SearchPetTest()
         {
             Pets.Logic.Manager manager = new Manager(@"c:\pets\test.csv");
+            RequestNewPet requestNewPet = new RequestNewPet();
+            requestNewPet.AnimalName = "DANTELION";
+            requestNewPet.AnimalType = "DOG";
+            requestNewPet.Gender = "M";
+            bool success = manager.CreatePet(requestNewPet);
+
             RequestSearchPet request = new RequestSearchPet();
-            request.SearchPetName = "DANTE";
-            request.SearchPetType = "CAT";
+            //request.SearchPetName = "DANTE";
+            //request.SearchPetType = "CAT";
             request.SearchPetGender = "M";
             var result = manager.SearchPet(request);
             Assert.IsNotNull(result);

@@ -57,7 +57,7 @@ namespace Pets.Database
             newCsvLine.AnimalName = AnimalName;
             newCsvLine.AnimalType = AnimalType;
             newCsvLine.Gender = Gender;
-            newCsvLine.LastUpdate = DateTime.Now.ToString("yyyyMMddmmss");  //<year><month><day><hour><minute><second>
+            newCsvLine.LastUpdate = DateTime.Now.ToString("yyyyMMddHHmmss");  //<year><month><day><hour><minute><second>
             CsvFileContent.Add(newCsvLine);
             using (var writer = new StreamWriter(CsvFilePath))
             using (var csv = new CsvWriter(writer))
@@ -69,7 +69,7 @@ namespace Pets.Database
             return true;
         }
 
-        public List<Pet> Search(string searchPetName, string searchPetType, string searchPetGender)
+        public List<Pet> Search(string searchPetName="", string searchPetType="", string searchPetGender="")
         {
             List<Pet> res = new List<Pet>();
             var partialResult= CsvFileContent;
@@ -79,23 +79,23 @@ namespace Pets.Database
             }
             if (searchPetName != String.Empty)
             {
-                partialResult= partialResult.Where(
-                    x => x.AnimalName.ToUpper().Contains(searchPetName.ToUpper())).ToList();
+                partialResult = partialResult.Where(
+                    x => x.AnimalName.ToUpper().Contains(searchPetName.ToUpper())).OrderBy(x => x.AnimalName).ToList(); ;
             }
             if (searchPetType != String.Empty)
             {
                 partialResult=(partialResult.Where(
-                    x => x.AnimalType.ToUpper().Contains(searchPetType.ToUpper())).ToList());
+                    x => x.AnimalType.ToUpper().Contains(searchPetType.ToUpper())).OrderByDescending(x=>DateTime.ParseExact(x.LastUpdate, "yyyyMMddHHmmss", System.Globalization.CultureInfo.InvariantCulture)).ToList());
             }
-            if (searchPetType != String.Empty)
+            if (searchPetGender != String.Empty)
             {
                 partialResult=(partialResult.Where(
-                    x => x.Gender.ToUpper().Contains(searchPetGender.ToUpper())).ToList());
+                    x => x.Gender.ToUpper().Contains(searchPetGender.ToUpper())).OrderByDescending(x => DateTime.ParseExact(x.LastUpdate, "yyyyMMddHHmmss", System.Globalization.CultureInfo.InvariantCulture)).ToList());
             }
             List<Pet> listPets = new List<Pet>();
             foreach (var row in partialResult)
             {
-                listPets.Add(new Pet() { AnimalName = row.AnimalName, Gender = row.Gender, AnimalType = row.AnimalType });
+                listPets.Add(new Pet() { AnimalName = row.AnimalName, Gender = row.Gender, AnimalType = row.AnimalType ,LastUpdate=row.LastUpdate});
             }
             res = listPets;
             return res;
