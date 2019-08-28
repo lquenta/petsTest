@@ -23,9 +23,12 @@ namespace Pets.Database
         List<CsvLine> CsvFileContent = new List<CsvLine>();
         public DAManager(string csvFilePath)
         {
+            CsvFilePath = csvFilePath;
             using (var reader = new StreamReader(csvFilePath))
             using (var csv = new CsvReader(reader))
             {
+                csv.Configuration.HasHeaderRecord = false;
+                csv.Configuration.Delimiter = ",";
                 CsvFileContent = csv.GetRecords<CsvLine>().ToList();
             }
 
@@ -39,6 +42,8 @@ namespace Pets.Database
                 using (var writer = new StreamWriter(CsvFilePath))
                 using (var csv = new CsvWriter(writer))
                 {
+                    csv.Configuration.HasHeaderRecord = false;
+                    csv.Configuration.Delimiter = ",";
                     csv.WriteRecords(CsvFileContent);
                 }
                 return true;
@@ -52,10 +57,13 @@ namespace Pets.Database
             newCsvLine.AnimalName = AnimalName;
             newCsvLine.AnimalType = AnimalType;
             newCsvLine.Gender = Gender;
+            newCsvLine.LastUpdate = DateTime.Now.ToString("yyyyMMddmmss");  //<year><month><day><hour><minute><second>
             CsvFileContent.Add(newCsvLine);
             using (var writer = new StreamWriter(CsvFilePath))
             using (var csv = new CsvWriter(writer))
             {
+                csv.Configuration.HasHeaderRecord = false;
+                csv.Configuration.Delimiter = ",";
                 csv.WriteRecords(CsvFileContent);
             }
             return true;
@@ -64,30 +72,32 @@ namespace Pets.Database
         public List<Pet> Search(string searchPetName, string searchPetType, string searchPetGender)
         {
             List<Pet> res = new List<Pet>();
-            var partialResult=new List<CsvLine>();
+            var partialResult= CsvFileContent;
             if (CsvFileContent.Count == 0)
             {
                 return res;
             }
             if (searchPetName != String.Empty)
             {
-                partialResult.AddRange(CsvFileContent.Where(
-                    x => x.AnimalName.ToUpper().Contains(searchPetName.ToUpper())).ToList());
+                partialResult= partialResult.Where(
+                    x => x.AnimalName.ToUpper().Contains(searchPetName.ToUpper())).ToList();
             }
             if (searchPetType != String.Empty)
             {
-                partialResult.AddRange(CsvFileContent.Where(
+                partialResult=(partialResult.Where(
                     x => x.AnimalType.ToUpper().Contains(searchPetType.ToUpper())).ToList());
             }
             if (searchPetType != String.Empty)
             {
-                partialResult.AddRange(CsvFileContent.Where(
+                partialResult=(partialResult.Where(
                     x => x.Gender.ToUpper().Contains(searchPetGender.ToUpper())).ToList());
             }
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Pet, CsvLine>());
-            var mapper = new Mapper(config);
-            res = mapper.Map<List<Pet>>(partialResult);
-
+            List<Pet> listPets = new List<Pet>();
+            foreach (var row in partialResult)
+            {
+                listPets.Add(new Pet() { AnimalName = row.AnimalName, Gender = row.Gender, AnimalType = row.AnimalType });
+            }
+            res = listPets;
             return res;
         }
     }

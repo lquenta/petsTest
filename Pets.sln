@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pets.Database", "Pets.Datab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pets.DAO", "Pets.DAO\Pets.DAO.csproj", "{83D03165-A18C-4BED-BC88-08D2E988C8C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pets.LogicTests", "Pets.LogicTests\Pets.LogicTests.csproj", "{41C03553-E3E0-44E6-B258-E7BCD7E8CB53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{83D03165-A18C-4BED-BC88-08D2E988C8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D03165-A18C-4BED-BC88-08D2E988C8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D03165-A18C-4BED-BC88-08D2E988C8C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41C03553-E3E0-44E6-B258-E7BCD7E8CB53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41C03553-E3E0-44E6-B258-E7BCD7E8CB53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41C03553-E3E0-44E6-B258-E7BCD7E8CB53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41C03553-E3E0-44E6-B258-E7BCD7E8CB53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{4072E83A-1877-4AB2-90F1-EF11641A40D2} = {A78B639F-1973-4C4D-84E3-288A917ABB90}
 		{19BA56BC-7C11-416D-BFE3-F74ED65208AE} = {0D0523EA-0F42-4E29-B6B6-B32686BCB439}
 		{83D03165-A18C-4BED-BC88-08D2E988C8C8} = {A78B639F-1973-4C4D-84E3-288A917ABB90}
+		{41C03553-E3E0-44E6-B258-E7BCD7E8CB53} = {A78B639F-1973-4C4D-84E3-288A917ABB90}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E9B8122-27E4-46C3-BAB7-67E803DA6CCD}
