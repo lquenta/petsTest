@@ -19,8 +19,8 @@ namespace Pets.RESTService.Controllers
             string csvFilePath= ConfigurationManager.AppSettings["CSVFilePath"].ToString();
             Manager manager = new Manager(csvFilePath);
             RequestSearchPet request = new RequestSearchPet();
-            if (request.SearchPetGender != "") {
-                switch (request.SearchPetGender.ToUpper())
+            if (gender != "") {
+                switch (gender.ToUpper())
                 {
                     case "MALE":
                         request.SearchPetGender="M";
@@ -33,11 +33,11 @@ namespace Pets.RESTService.Controllers
                         
                 }
             }
-            if(request.SearchPetName != "")
+            if(name != "")
             {
                 request.SearchPetName = name.Trim();
             }
-            if(request.SearchPetType != "")
+            if(typeSearch != "")
             {
                 request.SearchPetType = typeSearch.Trim().ToUpper();
             }
