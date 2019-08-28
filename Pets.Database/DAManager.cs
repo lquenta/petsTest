@@ -17,7 +17,7 @@ namespace Pets.Database
         public string Gender { get; set; }
         public string LastUpdate { get; set; }
     }
-    class DAManager : IDAManager
+    public class DAManager : IDAManager
     {
         public string CsvFilePath = "";
         List<CsvLine> CsvFileContent = new List<CsvLine>();

@@ -50,6 +50,10 @@
       <Project>{83D03165-A18C-4BED-BC88-08D2E988C8C8}</Project>
       <Name>Pets.DAO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pets.Database\Pets.Database.csproj">
+      <Project>{19ba56bc-7c11-416d-bfe3-f74ed65208ae}</Project>
+      <Name>Pets.Database</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
