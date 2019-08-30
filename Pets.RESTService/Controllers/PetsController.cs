@@ -15,6 +15,9 @@ namespace Pets.RESTService.Controllers
         // GET api/values/5
         public ResponseSearchPet Get(string name="",string typeSearch="",string gender="")
         {
+            if (name == null) { name = ""; }
+            if (typeSearch == null) { typeSearch = ""; }
+            if (gender == null) { gender = ""; }
             ResponseSearchPet res = new ResponseSearchPet();
             string csvFilePath= ConfigurationManager.AppSettings["CSVFilePath"].ToString();
             Manager manager = new Manager(csvFilePath);
@@ -26,6 +29,8 @@ namespace Pets.RESTService.Controllers
             if (gender != "") {
                 switch (gender.ToUpper())
                 {
+                    case "M": request.SearchPetGender = "M"; break;
+                    case "F": request.SearchPetGender = "F"; break;
                     case "MALE":
                         request.SearchPetGender="M";
                         break;

@@ -38,4 +38,19 @@ namespace Pets.DAO
         public string Gender { get; set; }
         public string LastUpdate { get; set; }
     }
+    public class PetType
+    {
+        public string ID
+        {
+            get;
+            set;
+        }
+
+        public string Name
+        {
+            get;
+            set;
+        }
+    }
+
 }

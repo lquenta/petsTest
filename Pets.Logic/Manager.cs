@@ -43,6 +43,12 @@ namespace Pets.Logic
             response.results = DAManager.GetAllPets();
             return response;
         }
+        public List<PetType> ReturnAllPetTypes()
+        {
+            List<PetType> res = new List<PetType>();
+            res = DAManager.ReturnAllPetTypes();
+            return res;
+        }
 
     }
 }

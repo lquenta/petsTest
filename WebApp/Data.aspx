@@ -7,10 +7,29 @@
         </div>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <button type="button" class="btn btn-primary" id="btnRefreshData">Refresh Data</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModalAddPet">Add a Pet</button>
-
+        <div class="row">
+                    
+            </div>
             <br />
+            
+            <div class="form-inline">
+               
+                <div class="form-group">
+                        <label for="serarchName-text" class="control-label">Search pet:</label>
+                        <input type="text" class="form-control" id="searchNamePetText">
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="control-label">Search by Pet Type:</label>
+                    <select id="petTypeDDSearch" class="form-control"><option value="">All</option></select>
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="control-label">Search by gender:</label>
+                    <select id="genderDDSearch" class="form-control"><option value="">All</option> </select>
+                </div>
+                <button type="button" class="btn btn-primary mb-2" id="searchButton">Search</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModalAddPet">Add a Pet</button>
+            </div>
+          
             <div>
                 <table class="table tblPetTBody table-bordered" id = "tblPetTBody" >  
                     <thead>  
@@ -38,10 +57,9 @@
                         <input type="text" class="form-control" id="animalType">
                       </div>
                         <div class="form-group">
-                        <label for="message-text" class="control-label">Gender:</label>
-                        <select id="genderDD" class="form-control"></select>
-                        
-                      </div>
+                            <label for="message-text" class="control-label">Gender:</label>
+                            <select id="genderDD" class="form-control"></select>
+                        </div>
 
                     </form>
                   </div>
@@ -59,6 +77,9 @@
     <script type = "text/javascript" >
         $('#save').click(function() {
             $('#formModalAddPet').modal('hide');
+        });
+        $('#searchButton').click(function () {
+            refreshData();
         });
         function saveNewPet() {
             var animalType = $('#animalType').val();
@@ -100,22 +121,41 @@
                     data: {},
                     success: function (result) {
                             $.each(result, function (i) {
-                            $('#genderDD').append($('<option></option>').val(result[i].ID).html(result[i].Name));
+                                $('#genderDD').append($('<option></option>').val(result[i].ID).html(result[i].Name));
+                                $('#genderDDSearch').append($('<option></option>').val(result[i].ID).html(result[i].Name));
                         });
                     },
                     failure: function () {
                         alert("Error");
                     }
-                });
+            });
+             $.ajax({
+                    type: "GET",
+                    url: "http://localhost:46853/api/PetTypesParam",
+                    dataType: "json",
+                    data: {},
+                    success: function (result) {
+                            $.each(result, function (i) {
+                            $('#petTypeDDSearch').append($('<option></option>').val(result[i].ID).html(result[i].Name));
+                        });
+                    },
+                    failure: function () {
+                        alert("Error");
+                    }
+            });
+
         }
         function refreshData() {
             $("#tblPetTBody tr").remove();  
+            var dataSearch = { name: $('#searchNamePetText').val(), typeSearch: $('#petTypeDDSearch').val(), gender: $('#genderDDSearch').val() };
+            console.log(dataSearch);
             $.ajax  
             ({  
                 type: 'GET',  
                 url: 'http://localhost:46853/api/Pets',  
                 dataType: 'json',  
-                data: {},  
+                data: dataSearch,
+                encode:true,
                 success: function(data)   
                 {  
                     $("#imgLoading").hide();  
@@ -144,9 +184,7 @@
             });  
             return false;  
         }    
-        $( "#btnRefreshData" ).click(function() {
-            refreshData();
-        });
+        
 
         $(document).ready(function()  
         {  

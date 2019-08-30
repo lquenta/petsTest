@@ -14,6 +14,8 @@ namespace Pets.Database
         List<Pet> Search(string SearchPetName, string SearchPetType, string SearchPetGender);
         bool Delete (string AnimalType, string AnimalName);
         List<Pet> GetAllPets();
-                                     
+        List<PetType> ReturnAllPetTypes();
+
+
     }
 }

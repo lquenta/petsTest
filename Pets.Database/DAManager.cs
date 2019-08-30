@@ -114,7 +114,24 @@ namespace Pets.Database
             return listPets;
         }
 
-       
+        List<PetType> IDAManager.ReturnAllPetTypes()
+        {
+            List<PetType> petTypes = new List<PetType>();
+            var data = from v in CsvFileContent
+                       select new
+                       {
+                           ID = v.AnimalType,
+                           Name = v.AnimalType
+                       };
+
+            data = data.Distinct();
+            foreach (var typeRow in data)
+            {
+                petTypes.Add(new PetType() { ID = typeRow.ID, Name = typeRow.Name });
+
+            }
+            return petTypes;
+        }
     }
 
 
