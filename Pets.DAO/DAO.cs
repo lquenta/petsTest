@@ -27,6 +27,10 @@ namespace Pets.DAO
     {
         public List<Pet> results { get; set; }
     }
+    public class ResponseGetAllPets
+    {
+        public List<Pet> results { get; set; }
+    }
     public class Pet
     {
         public string AnimalType { get; set; }

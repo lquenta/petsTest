@@ -19,6 +19,10 @@ namespace Pets.RESTService.Controllers
             string csvFilePath= ConfigurationManager.AppSettings["CSVFilePath"].ToString();
             Manager manager = new Manager(csvFilePath);
             RequestSearchPet request = new RequestSearchPet();
+            if(gender=="" && typeSearch=="" && gender == "")
+            {
+                res = manager.ReturnAllPets();
+            }
             if (gender != "") {
                 switch (gender.ToUpper())
                 {

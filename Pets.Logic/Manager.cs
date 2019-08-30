@@ -37,6 +37,12 @@ namespace Pets.Logic
             response.results= DAManager.Search(request.SearchPetName, request.SearchPetType, request.SearchPetGender);
             return response;
         }
+        public ResponseSearchPet ReturnAllPets()
+        {
+            ResponseSearchPet response = new ResponseSearchPet();
+            response.results = DAManager.GetAllPets();
+            return response;
+        }
 
     }
 }

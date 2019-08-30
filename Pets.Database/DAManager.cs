@@ -100,6 +100,21 @@ namespace Pets.Database
             res = listPets;
             return res;
         }
+
+       
+
+        List<Pet> IDAManager.GetAllPets()
+        {
+            List<Pet> listPets = new List<Pet>();
+            foreach (var row in CsvFileContent)
+            {
+                listPets.Add(new Pet() { AnimalName = row.AnimalName, Gender = row.Gender, AnimalType = row.AnimalType, LastUpdate = row.LastUpdate });
+            }
+            
+            return listPets;
+        }
+
+       
     }
 
 

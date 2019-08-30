@@ -13,6 +13,7 @@ namespace Pets.Database
         bool Insert(string AnimalType, string AnimalName, string Gender);
         List<Pet> Search(string SearchPetName, string SearchPetType, string SearchPetGender);
         bool Delete (string AnimalType, string AnimalName);
+        List<Pet> GetAllPets();
                                      
     }
 }
